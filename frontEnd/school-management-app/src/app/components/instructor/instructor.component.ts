@@ -18,7 +18,6 @@ export class InstructorComponent implements OnInit {
 
   searchFormGroup:FormGroup;
   instructorFormGroup:FormGroup;
-  updateCourseFormGroup:FormGroup;
   submitted:boolean = false;
   deleteInstructor:Instructor;
 
@@ -46,14 +45,15 @@ export class InstructorComponent implements OnInit {
     })
 
     this.instructorFormGroup = this.fb.group({
-      firstName: ['',Validators.required],
-      lastName: ['',Validators.required],
-      summary: ['',Validators.required],
+      firstName: ["",Validators.required],
+      lastName: ["",Validators.required],
+      summary: ["",Validators.required],
       user:this.fb.group({
-        email: ["",[Validators.required, Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")], [EmailExistsValidator.validate(this.userService)]],
-        password: ["", Validators.required]
+        email:["",[Validators.required, Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")]],
+        password: ["",Validators.required]
       })
     })
+    this.handleSearchInstructor();
   }
 
 
@@ -83,6 +83,69 @@ export class InstructorComponent implements OnInit {
       },
       error: err =>{
         alert('there is an error occure ' + err.message)
+      }
+    })
+  }
+
+
+  onCloseModal(modal:any){
+    modal.close();
+    this.instructorFormGroup.reset();
+  }
+
+
+
+  getCreateInstructorModal(createInstructorContent:any){
+    this.submitted = false;
+    this.modalService.open(createInstructorContent, {size:'xl'})
+  }
+
+
+
+
+
+
+  onSaveInstructor(createModal:any){
+
+    console.log(this.instructorFormGroup.value)
+
+    this.submitted = true;
+    if(this.instructorFormGroup.invalid) return;
+
+    this.instructorService.createInstructor(this.instructorFormGroup.value).subscribe({
+      next:response =>{
+        alert("success saving instructor");
+        this.handleSearchInstructor();
+        this.instructorFormGroup.reset();
+        this.submitted = false;
+        createModal.close();
+     },
+     error:err =>{
+
+     }
+    })
+
+  }
+
+
+
+
+
+
+
+  getDeleteInstructorModal(temp:Instructor, deleteInstructorContent:any){
+    this.deleteInstructor = temp;
+    this.modalService.open(deleteInstructorContent, {size:'l'})
+  }
+
+  onDeleteInstructor(tempDelete:Instructor,deleteInstructorContent:any){
+    this.instructorService.deleteInstructor(tempDelete).subscribe({
+      next:response =>{
+        this.handleSearchInstructor();
+        deleteInstructorContent.close();
+      },
+      error:err =>{
+
       }
     })
   }
