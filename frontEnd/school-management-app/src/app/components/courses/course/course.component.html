@@ -48,7 +48,8 @@
               <td>{{temp.courseDescription}}</td>
               <td>{{temp.instructor.firstName}} {{temp.instructor.lastName}}</td>
               <td>
-                  <button (click)="handleDeleteCourse(temp)"  class="btn btn-danger mx-1"><i class="bi-trash"></i></button>
+                  <!-- <button (click)="handleDeleteCourse(temp)"  class="btn btn-danger mx-1"><i class="bi-trash"></i></button> -->
+                  <button (click)="getDeleteModal(temp, deleteContent)"  class="btn btn-danger mx-1"><i class="bi-trash"></i></button>
                   <button (click)="getUpdateModal(temp, updateContent)" class="btn btn-success mx-1"><i class="bi bi-pencil-square"></i></button>
               </td>
 
@@ -307,7 +308,26 @@
 </ng-template>
 
 
+<!------------------------------------------------------------------------------------------------------------------>
 
+<!--delete modal-->
+<ng-template #deleteContent let-deleteModal>
+    <div class="modal-header">
+      <div class="modal-title text-muted">
+        <i class="fa-solid fa-triangle-exclamation"></i>&nbsp; <b>Are You Sure You want To Delete Course</b></div>
+      <button type="button" class="btn-close" aria-label="Close" (click)="deleteModal.dismiss('Cross click')"></button>
+    </div>
+
+        <div class="modal-body">
+          <b>Course Name: <span>{{deleteCourse.courseName}}</span></b>
+        </div>
+
+
+    <div class="modal-footer">
+      <button type="button" class="btn btn-sm btn-secondary" (click)="onCloseModal(deleteModal)">Close</button>
+      <button type="button" class="btn btn-sm btn-primary" (click)="onDeleteCourse(deleteCourse,deleteModal)">I'm Sure</button>
+    </div>
+</ng-template>
 
 
 

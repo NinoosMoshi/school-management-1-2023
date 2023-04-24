@@ -22,6 +22,7 @@ export class CourseComponent implements OnInit {
   updateCourseFormGroup:FormGroup;
   submitted:boolean = false;
   defaultInstructor:Instructor;
+  deleteCourse:Course;
 
 
   thePageNumber: number = 1;
@@ -94,18 +95,18 @@ export class CourseComponent implements OnInit {
 
 
 
-  handleDeleteCourse(temp:Course){
-    let conf = confirm("Are You Sure!")
-    if(!conf) return;
-    this.courseService.deleteCourse(temp).subscribe({
-      next:response =>{
-        this.handleSearchCourses();
-      },
-      error:err =>{
+  // handleDeleteCourse(temp:Course){
+  //   let conf = confirm("Are You Sure!")
+  //   if(!conf) return;
+  //   this.courseService.deleteCourse(temp).subscribe({
+  //     next:response =>{
+  //       this.handleSearchCourses();
+  //     },
+  //     error:err =>{
 
-      }
-    })
-  }
+  //     }
+  //   })
+  // }
 
 
 
@@ -191,6 +192,23 @@ export class CourseComponent implements OnInit {
   }
 
 
+
+  getDeleteModal(temp:Course, deleteContent:any){
+    this.deleteCourse = temp;
+    this.modalService.open(deleteContent, {size:'l'})
+  }
+
+  onDeleteCourse(tempDelete:Course,deleteModal:any){
+    this.courseService.deleteCourse(tempDelete).subscribe({
+      next:response =>{
+        this.handleSearchCourses();
+        deleteModal.close();
+      },
+      error:err =>{
+
+      }
+    })
+  }
 
 
 }
