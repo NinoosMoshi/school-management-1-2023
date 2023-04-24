@@ -9,6 +9,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
+import { InstructorComponent } from './components/instructor/instructor.component';
 
 
 
@@ -18,6 +19,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     CourseComponent,
     StudentComponent,
     NavbarComponent,
+    InstructorComponent,
   ],
   imports: [
     BrowserModule,

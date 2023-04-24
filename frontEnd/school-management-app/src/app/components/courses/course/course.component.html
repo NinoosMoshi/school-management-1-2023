@@ -314,14 +314,13 @@
 <ng-template #deleteContent let-deleteModal>
     <div class="modal-header">
       <div class="modal-title text-muted">
-        <i class="fa-solid fa-triangle-exclamation"></i>&nbsp; <b>Are You Sure You want To Delete Course</b></div>
+        <i class="fa-solid fa-triangle-exclamation warnning-icon"></i>&nbsp; <span>Are You Sure You want To Delete Course</span></div>
       <button type="button" class="btn-close" aria-label="Close" (click)="deleteModal.dismiss('Cross click')"></button>
     </div>
 
         <div class="modal-body">
-          <b>Course Name: <span>{{deleteCourse.courseName}}</span></b>
+          <b>Course Name:<span>{{deleteCourse.courseName}}</span></b>
         </div>
-
 
     <div class="modal-footer">
       <button type="button" class="btn btn-sm btn-secondary" (click)="onCloseModal(deleteModal)">Close</button>
