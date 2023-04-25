@@ -13,11 +13,11 @@ export class CourseService {
   constructor(private http:HttpClient) { }
 
      // http://localhost:8082/courses/all-courses?page=0&size=5
-    //  public getCourseList(page:number, size:number):Observable<GetResponse>{
-    //   return this.http.get<GetResponse>(`${environment.backendHost}/courses/all-courses?page=${page}&size=${size}`).pipe(
-    //     map(response => response)
-    //   )
-    // }
+     public getCourseList(page:number, size:number):Observable<GetResponse>{
+      return this.http.get<GetResponse>(`${environment.backendHost}/courses/all-courses?page=${page}&size=${size}`).pipe(
+        map(response => response)
+      )
+    }
 
 
      // http://localhost:8082/courses/search?keyword=co&page=0&size=5
@@ -58,6 +58,7 @@ export class CourseService {
           map(response => response)
         )
       }
+
 
 }
 

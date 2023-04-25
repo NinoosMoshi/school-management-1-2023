@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { Course } from 'src/app/model/course';
 import { Instructor } from 'src/app/model/instructor';
+import { CourseService } from 'src/app/services/course.service';
 import { InstructorService } from 'src/app/services/instructor.service';
 import { UserService } from 'src/app/services/user.service';
 import { EmailExistsValidator } from 'src/app/validators/email-exists-validator';
@@ -15,11 +17,13 @@ export class InstructorComponent implements OnInit {
 
 
   instructors: Instructor[] = [];
+  courses:Course[] = [];
 
   searchFormGroup:FormGroup;
   instructorFormGroup:FormGroup;
   submitted:boolean = false;
   deleteInstructor:Instructor;
+  modalInstructor:Instructor;
 
 
   thePageNumber: number = 1;
@@ -30,12 +34,14 @@ export class InstructorComponent implements OnInit {
   constructor(private modalService:NgbModal,
               private fb: FormBuilder,
               private instructorService: InstructorService,
-              private userService:UserService
+              private userService:UserService,
+              private courseService:CourseService
               ) { }
 
   ngOnInit(): void {
     this.myForm();
     this.handleSearchInstructor();
+    this.getAllCourses();
   }
 
 
@@ -49,11 +55,11 @@ export class InstructorComponent implements OnInit {
       lastName: ["",Validators.required],
       summary: ["",Validators.required],
       user:this.fb.group({
-        email:["",[Validators.required, Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")]],
+        email:["",[Validators.required, Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")], [EmailExistsValidator.validate(this.userService)]],
         password: ["",Validators.required]
       })
     })
-    this.handleSearchInstructor();
+
   }
 
 
@@ -151,6 +157,43 @@ export class InstructorComponent implements OnInit {
   }
 
 
+
+
+  getCoursesModal(temp:Instructor,coursesContent:any){
+     this.modalInstructor = temp;
+     this.handleSearchCourses(temp);
+     this.modalService.open(coursesContent, {size:'xl'})
+  }
+
+
+  handleSearchCourses(temp:Instructor){
+    this.courseService.getCoursesByInstructor(temp.instructorId, this.thePageNumber - 1, this.thePageSize).subscribe({
+      next: response =>{
+        this.courses = response.content;
+        this.thePageNumber = response.number + 1;
+        this.thePageSize = response.size;
+        this.theTotalElements = response.totalElements;
+      },
+      error: err =>{
+        alert('there is an error occure ' + err.message)
+      }
+    })
+  }
+
+
+  getAllCourses(){
+    this.courseService.getCourseList(this.thePageNumber - 1, this.thePageSize).subscribe({
+      next: response =>{
+        this.courses = response.content;
+        this.thePageNumber = response.number + 1;
+        this.thePageSize = response.size;
+        this.theTotalElements = response.totalElements;
+      },
+      error: err =>{
+        alert('there is an error occure ' + err.message)
+      }
+    })
+  }
 
 
 }

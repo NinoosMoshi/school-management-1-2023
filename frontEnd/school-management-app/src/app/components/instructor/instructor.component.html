@@ -47,7 +47,7 @@
               <td>{{temp.summary}}</td>
               <td>
                 <button (click)="getDeleteInstructorModal(temp,deleteInstructorContent)" class="btn btn-danger mx-1"><i class="bi-trash"></i></button>
-                <button  class="btn btn-info mx-1">Courses</button>
+                <button (click)="getCoursesModal(temp,coursesContent)" class="btn btn-info mx-1">Courses</button>
               </td>
 
             </tr>
@@ -178,6 +178,9 @@
                 <div *ngIf="instructorFormGroup.get('user.email')!.errors?.['pattern']">
                     Please enter a valid Email
                 </div>
+                <div *ngIf="instructorFormGroup.get('user.email')!.errors?.['emailAlreadyExists']">
+                  Email Already Exists
+              </div>
               </div>
                <!--end validation-->
             </div>
@@ -238,4 +241,83 @@
     <button type="button" class="btn btn-sm btn-secondary" (click)="onCloseModal(deleteModal)">Close</button>
     <button type="button" class="btn btn-sm btn-primary" (click)="onDeleteInstructor(deleteInstructor,deleteModal)">I'm Sure</button>
   </div>
+</ng-template>
+
+
+
+<!------------------------------------------------------------------------------------------------------------------>
+
+<!--courses modal-->
+<ng-template #coursesContent let-coursesModal>
+  <div class="modal-header">
+    <div class="modal-title text-muted"><i class="fa-regular fa-circle-dot"></i>&nbsp; Courses Instructor</div>
+    <button type="button" class="btn-close" aria-label="Close" (click)="coursesModal.dismiss('Cross click')"></button>
+  </div>
+
+      <div class="modal-body">
+        <div class="modal-content">
+
+          <div class="table-wrapper mt-5">
+            <table class="table table-striped table-hover">
+              <thead>
+                 <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Duration</th>
+                    <th>Description</th>
+                    <th>Instructor</th>
+                 </tr>
+              </thead>
+              <tbody>
+                  <tr *ngFor="let temp of courses">
+                    <td>{{temp.courseId}}</td>
+                    <td>{{temp.courseName}}</td>
+                    <td>{{temp.courseDuration}}</td>
+                    <td>{{temp.courseDescription}}</td>
+                    <td>{{temp.instructor.firstName}} {{temp.instructor.lastName}}</td>
+                  </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Course ID</th>
+                  <th>Course Name</th>
+                  <th>Course Duration</th>
+                  <th>Course Description</th>
+                  <th>Instructor</th>
+               </tr>
+              </tfoot>
+           </table>
+          </div>
+
+          <div class="footer-pagination">
+            <div class="row">
+               <div class="col-md-6"></div>
+
+               <div class="col-md-6">
+                  <div class="row">
+                     <div class="col-md-9" style="padding-left: 30%;">
+
+                      <ngb-pagination
+                      [(page)]="thePageNumber"
+                      [pageSize]="thePageSize"
+                      [collectionSize]="theTotalElements"
+                      [maxSize]="2"
+                      [boundaryLinks]="true"
+                      (pageChange)="getAllCourses()"
+                   >
+                   </ngb-pagination>
+
+                     </div>
+                  </div>
+               </div>
+
+
+            </div>
+         </div>
+
+
+        </div>
+      </div>
+
+
 </ng-template>
