@@ -144,6 +144,7 @@ export class InstructorComponent implements OnInit {
     this.modalService.open(deleteInstructorContent, {size:'l'})
   }
 
+
   onDeleteInstructor(tempDelete:Instructor,deleteInstructorContent:any){
     this.instructorService.deleteInstructor(tempDelete).subscribe({
       next:response =>{

@@ -10,6 +10,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { InstructorComponent } from './components/instructor/instructor.component';
+import { CoursesInstructorComponent } from './components/courses-instructor/courses-instructor.component';
 
 
 
@@ -20,6 +21,7 @@ import { InstructorComponent } from './components/instructor/instructor.componen
     StudentComponent,
     NavbarComponent,
     InstructorComponent,
+    CoursesInstructorComponent,
   ],
   imports: [
     BrowserModule,
