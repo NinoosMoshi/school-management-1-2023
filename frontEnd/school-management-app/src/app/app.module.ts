@@ -11,6 +11,7 @@ import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { InstructorComponent } from './components/instructor/instructor.component';
 import { CoursesInstructorComponent } from './components/courses-instructor/courses-instructor.component';
+import { CoursesStudentComponent } from './components/courses-student/courses-student.component';
 
 
 
@@ -22,6 +23,7 @@ import { CoursesInstructorComponent } from './components/courses-instructor/cour
     NavbarComponent,
     InstructorComponent,
     CoursesInstructorComponent,
+    CoursesStudentComponent,
   ],
   imports: [
     BrowserModule,

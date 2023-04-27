@@ -60,6 +60,14 @@ export class CourseService {
       }
 
 
+       // http://localhost:8082/students/{studentId}/courses?page=0&size=5
+       public getCoursesByStudent(studentId:number, page:number, size:number):Observable<GetResponse>{
+        return this.http.get<GetResponse>(`${environment.backendHost}/students/${studentId}/courses?page=${page}&size=${size}`).pipe(
+          map(response => response)
+        )
+      }
+
+
 }
 
 
