@@ -90,6 +90,20 @@ export class CoursesInstructorComponent implements OnInit {
   onSaveCourse(createModal:any){
     this.submitted = true;
     if(this.courseFormGroup.invalid) return;
+
+    this.courseService.createCourse(this.courseFormGroup.value).subscribe({
+      next:response =>{
+         alert("success saving course");
+         this.handleSearchInstructorCourses();
+         this.courseFormGroup.reset();
+         this.submitted = false;
+         createModal.close();
+      },
+      error:err =>{
+
+      }
+    })
+
   }
 
 
