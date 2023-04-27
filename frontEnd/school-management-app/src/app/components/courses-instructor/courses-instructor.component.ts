@@ -18,6 +18,7 @@ export class CoursesInstructorComponent implements OnInit {
   currentInstructor:Instructor;
   courses:Course[] = [];
   courseFormGroup:FormGroup;
+  updateCourseFormGroup:FormGroup;
   submitted:boolean = false;
 
 
@@ -107,6 +108,41 @@ export class CoursesInstructorComponent implements OnInit {
   }
 
 
+
+  getUpdateModal(temp:Course, updateContent:any){
+    this.updateCourseFormGroup = this.fb.group({
+      courseId: [temp.courseId,Validators.required],
+      courseName: [temp.courseName,Validators.required],
+      courseDuration: [temp.courseDuration,Validators.required],
+      courseDescription: [temp.courseDescription,Validators.required],
+      instructor: [temp.instructor,Validators.required],
+     })
+
+     this.modalService.open(updateContent, {size:'xl'})
+  }
+
+
+  onUdateCloseModal(updateModal:any){
+    updateModal.close();
+    this.updateCourseFormGroup.reset();
+  }
+
+
+  onUpdateCourse(updateModal:any){
+    if(this.updateCourseFormGroup.invalid) return;
+
+    this.courseService.updateCourse(this.updateCourseFormGroup.value, this.updateCourseFormGroup.value.courseId).subscribe({
+      next:response =>{
+        alert("success updating course");
+        this.handleSearchInstructorCourses();
+        this.submitted = false;
+        updateModal.close();
+      },
+      error:err =>{
+
+      }
+    })
+  }
 
 
 
