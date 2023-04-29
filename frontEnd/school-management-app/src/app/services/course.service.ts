@@ -68,6 +68,24 @@ export class CourseService {
       }
 
 
+
+      // http://localhost:8082/students/{studentId}/other-courses?page=0&size=5
+      public getNonEnrolledCoursesByStudent(studentId:number, page:number, size:number):Observable<GetResponse>{
+        return this.http.get<GetResponse>(`${environment.backendHost}/students/${studentId}/other-courses?page=${page}&size=${size}`).pipe(
+          map(response => response)
+        )
+      }
+
+
+      // http://localhost:8082/courses/{courseId}/enroll/students/{studentId}
+      public getEnrollStudentInCourse(courseId:number,studentId:number):Observable<Course>{
+        return this.http.post<Course>(`${environment.backendHost}/courses/${courseId}/enroll/students/${studentId}`,null).pipe(
+          map(response => response)
+        )
+      }
+
+
+
 }
 
 
@@ -78,3 +96,5 @@ interface GetResponse{
   size: number,
   number: number
 }
+
+
