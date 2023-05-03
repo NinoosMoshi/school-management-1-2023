@@ -5,13 +5,14 @@ import com.ninos.entity.Course;
 import com.ninos.service.CourseService;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @AllArgsConstructor
 @RestController
-@RequestMapping("/courses")
+@RequestMapping("/api/v1/courses")
 public class CourseRestController {
 
 
@@ -40,6 +41,7 @@ public class CourseRestController {
     }
 
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/create")
     public CourseDTO saveCourse(@RequestBody CourseDTO courseDTO){
        return courseService.createCourse(courseDTO);
